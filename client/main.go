@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+    "time"
 	"os"
 	"strings"
 	"sync"
@@ -20,6 +21,29 @@ type Resposta struct {
 	Vogais   int    `json:"vogais"`
 	Letras   int    `json:"letras"`
 	Numeros  int    `json:"numeros"`
+}
+
+type ParteLog struct {
+	Servidor string `json:"servidor"`
+	Texto    string `json:"texto"`
+	Palavras int    `json:"palavras"`
+	Vogais   int    `json:"vogais"`
+	Letras   int    `json:"letras"`
+	Numeros  int    `json:"numeros"`
+}
+
+type TotalLog struct {
+	Palavras int `json:"palavras"`
+	Vogais   int `json:"vogais"`
+	Letras   int `json:"letras"`
+	Numeros  int `json:"numeros"`
+}
+
+type Log struct {
+	DataHora      string     `json:"dataHora"`
+	TextoCompleto string     `json:"textoCompleto"`
+	Partes        []ParteLog `json:"partes"`
+	Total         TotalLog   `json:"total"`
 }
 
 func enviarParaServidor(endereco string, texto string) (Resposta, error) {
@@ -64,6 +88,73 @@ func dividirTexto(texto string) (string, string) {
 	parte2 := strings.Join(palavras[meio:], " ")
 
 	return parte1, parte2
+}
+
+func salvarLog(
+	textoCompleto string,
+	parte1 string,
+	parte2 string,
+	resposta1 Resposta,
+	resposta2 Resposta,
+) error {
+
+	log := Log{
+		DataHora:      time.Now().Format(time.RFC3339),
+		TextoCompleto: textoCompleto,
+
+		Partes: []ParteLog{
+			{
+				Servidor: resposta1.Servidor,
+				Texto:    parte1,
+				Palavras: resposta1.Palavras,
+				Vogais:   resposta1.Vogais,
+				Letras:   resposta1.Letras,
+				Numeros:  resposta1.Numeros,
+			},
+			{
+				Servidor: resposta2.Servidor,
+				Texto:    parte2,
+				Palavras: resposta2.Palavras,
+				Vogais:   resposta2.Vogais,
+				Letras:   resposta2.Letras,
+				Numeros:  resposta2.Numeros,
+			},
+		},
+
+		Total: TotalLog{
+			Palavras: resposta1.Palavras + resposta2.Palavras,
+			Vogais:   resposta1.Vogais + resposta2.Vogais,
+			Letras:   resposta1.Letras + resposta2.Letras,
+			Numeros:  resposta1.Numeros + resposta2.Numeros,
+		},
+	}
+
+	dadosJSON, erro := json.MarshalIndent(log, "", "    ")
+
+	if erro != nil {
+		return erro
+	}
+
+	erro = os.MkdirAll("logs", 0755)
+
+	if erro != nil {
+		return erro
+	}
+
+	nomeArquivo := fmt.Sprintf(
+		"logs/log_%s.json",
+		time.Now().Format("2006-01-02_15-04-05"),
+	)
+
+	erro = os.WriteFile(nomeArquivo, dadosJSON, 0644)
+
+	if erro != nil {
+		return erro
+	}
+
+	fmt.Println("Log salvo em:", nomeArquivo)
+
+	return nil
 }
 
 func main() {
@@ -131,16 +222,28 @@ func main() {
 	totalVogais := resposta1.Vogais + resposta2.Vogais
 	totalNumeros := resposta1.Numeros + resposta2.Numeros
 
-	fmt.Println("Palavras:", totalPalavras)
-	fmt.Println("Letras:", totalLetras)
-	fmt.Println("Vogais:", totalVogais)
-	fmt.Println("Números:", totalNumeros)
+    fmt.Printf(
+        "\n========== Resultado ==========\n"+
+            "Palavras: %d | Letras: %d | Vogais: %d | Números: %d\n\n"+
+            "Servidor 1: %s\n"+
+            "Servidor 2: %s\n",
+        totalPalavras,
+        totalLetras,
+        totalVogais,
+        totalNumeros,
+        parte1,
+        parte2,
+    )
 
-	fmt.Println()
-	fmt.Println("Servidor 1 processou:")
-	fmt.Println(parte1)
+    erro = salvarLog(
+	    texto,
+	    parte1,
+	    parte2,
+	    resposta1,
+	    resposta2,
+    )
 
-	fmt.Println()
-	fmt.Println("Servidor 2 processou:")
-	fmt.Println(parte2)
+    if erro != nil {
+	    fmt.Println("Erro ao salvar log:", erro)
+    }
 }
