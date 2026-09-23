@@ -392,7 +392,7 @@ O servidor ficará disponível na porta:
 localhost:8001
 ```
 
-A mensagem apresentada será semelhante a:
+A mensagem apresentada será:
 
 ```text
 Servidor 1 iniciado na porta 8001...
@@ -403,7 +403,7 @@ Servidor 1 iniciado na porta 8001...
 Abra outro terminal na pasta principal do projeto e execute:
 
 ```bash
-go run server2.go
+go run ./server2
 ```
 
 O servidor ficará disponível na porta:
@@ -412,7 +412,7 @@ O servidor ficará disponível na porta:
 localhost:8002
 ```
 
-A mensagem apresentada será semelhante a:
+A mensagem apresentada será:
 
 ```text
 Servidor 2 iniciado na porta 8002...
