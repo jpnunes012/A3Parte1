@@ -326,6 +326,7 @@ logs/log_2026-09-22_20-47-32.json
 ```text
 A3Parte1/
 │
+├── main.go
 ├── go.mod
 ├── README.md
 │
@@ -333,9 +334,7 @@ A3Parte1/
 │   ├── interface/
 │   │   └── index.html
 │   │
-│   ├── logs/
-│   │
-│   └── main.go
+│   └──logs/
 │
 ├── server1/
 │   └── s1.go
@@ -424,7 +423,7 @@ Servidor 2 iniciado na porta 8002...
 Abra um terceiro terminal na pasta principal do projeto e execute:
 
 ```bash
-go run ./client
+go run main.go
 ```
 
 O cliente iniciará o servidor HTTP na porta `8080`.
