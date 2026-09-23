@@ -384,7 +384,7 @@ Após instalar o Go, abra um terminal na pasta principal do projeto.
 Execute:
 
 ```bash
-go run ./server1
+go run s1.go
 ```
 
 O servidor ficará disponível na porta:
@@ -404,7 +404,7 @@ Servidor 1 iniciado na porta 8001...
 Abra outro terminal na pasta principal do projeto e execute:
 
 ```bash
-go run ./server2
+go run s2.go
 ```
 
 O servidor ficará disponível na porta:
@@ -424,15 +424,15 @@ Servidor 2 iniciado na porta 8002...
 Abra um terceiro terminal na pasta principal do projeto e execute:
 
 ```bash
-go run ./client
+go run main.go
 ```
 
 O cliente iniciará o servidor HTTP na porta `8080`.
 
-Será apresentada uma mensagem semelhante a:
+Será apresentada uma mensagem assim:
 
 ```text
-Abre em http://localhost:8080
+Aberto em http://localhost:8080
 Os servidores de localhost:8001 e localhost:8002 precisam estar de pé.
 ```
 
