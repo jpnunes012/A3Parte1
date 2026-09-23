@@ -211,7 +211,7 @@ func main() {
 	}
 
 	http.HandleFunc("/api/processar", handlerProcessar)
-	http.Handle("/", http.FileServer(http.Dir("./interface")))
+	http.Handle("/", http.FileServer(http.Dir("./client/interface")))
 
 	endereco := "localhost:" + porta
 	fmt.Printf("Aberto em http://%s\n", endereco)
