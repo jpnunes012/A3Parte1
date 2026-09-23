@@ -19,8 +19,6 @@ O projeto utiliza três processos principais:
 - **Servidor 1:** recebe e processa a primeira parte do texto.
 - **Servidor 2:** recebe e processa a segunda parte do texto.
 
-Fluxo simplificado:
-
 ```text
                  +----------------+
                  |     CLIENTE    |
