@@ -332,9 +332,9 @@ A3Parte1/
 │
 ├── client/
 │   ├── interface/
-│   │   └── index.html
-│   │
-│   └──logs/
+│       └── index.html  
+│ 
+├──logs/
 │
 ├── server1/
 │   └── s1.go
