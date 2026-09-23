@@ -214,7 +214,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./interface")))
 
 	endereco := "localhost:" + porta
-	fmt.Printf("Abre em http://%s\n", endereco)
+	fmt.Printf("Aberto em http://%s\n", endereco)
 	fmt.Println("Os servidores de localhost:8001 e localhost:8002 precisam estar de pé.")
 
 	if erro := http.ListenAndServe(endereco, nil); erro != nil {
