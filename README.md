@@ -153,6 +153,7 @@ a3/
 ├── go.mod
 │
 ├── client/
+│   ├── interface/
 │   ├── logs/
 │   └── main.go
 │
@@ -167,6 +168,7 @@ a3/
 
 ## Tecnologias utilizadas
 
+- HTML
 - Go
 - TCP Sockets
 - JSON
@@ -215,11 +217,18 @@ Em um terceiro terminal:
 go run ./client
 ```
 
-O programa solicitará um texto:
+### 4. Abrir o endereço HTTP no navegador
+
+
+Abra o navegador e entre em:
 
 ```text
-Digite um texto:
+localhost:8080
 ```
+
+### 5. Dividir texto selecionado
+
+Digite ou cole um texto no prompt, e clique no botão "Dividir"
 
 Exemplo:
 
@@ -232,15 +241,20 @@ O texto será dividido entre os dois servidores, e dará o resultado:
 ```text
 ========== Resultado ==========
 
-Palavras: 11 | Letras: 79 | Vogais: 36 | Números: 3
-
 Servidor 1:
 Programação distribuída permite utilizar vários
+
+Palavras: 5 | Letras: 45 | Vogais: 21 | Números: 0
 
 Servidor 2:
 computadores para processar uma tarefa 123.
 
-Log salvo em: logs/log_2026-09-22_20-47-32.json
+Palavras: 6 | Letras: 34 | Vogais: 15 | Números: 3
+
+TOTAL
+Palavras: 11 | Letras: 79 | Vogais: 36 | Números: 3
+
+Salvo em: logs/log_2026-09-22_20-47-32.json
 ```
 
 ---
